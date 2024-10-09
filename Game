@@ -1,0 +1,97 @@
+```
+**index.html**
+```html
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>3 Cup Game</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <h1>3 Cup Game</h1>
+  <div class="cups">
+    <div id="cup-A" class="cup">A</div>
+    <div id="cup-B" class="cup">B</div>
+    <div id="cup-C" class="cup">C</div>
+  </div>
+  <button id="shuffle-button">Shuffle</button>
+  <button id="bet-button">Place Bet</button>
+  <div id="result"></div>
+  <script src="script.js"></script>
+</body>
+</html>
+```
+
+*style.css*
+```
+body {
+  font-family: Arial, sans-serif;
+  margin: 20px;
+}
+
+.cups {
+  display: flex;
+  justify-content: space-between;
+}
+
+.cup {
+  width: 50px;
+  height: 50px;
+  border: 1px solid black;
+  border-radius: 50%;
+  text-align: center;
+  padding: 10px;
+  margin: 10px;
+}
+
+#result {
+  font-size: 24px;
+  font-weight: bold;
+  margin-top: 20px;
+}
+
+button {
+  padding: 10px;
+  border: none;
+  border-radius: 5px;
+  background-color: #4CAF50;
+  color: #fff;
+  cursor: pointer;
+}
+
+button:hover {
+  background-color: #3e8e41;
+}
+```
+
+*script.js*
+```
+let ballLocation = Math.floor(Math.random() * 3);
+const cups = document.querySelectorAll('.cup');
+const shuffleButton = document.getElementById('shuffle-button');
+const betButton = document.getElementById('bet-button');
+const resultDiv = document.getElementById('result');
+
+shuffleButton.addEventListener('click', shuffleCups);
+betButton.addEventListener('click', placeBet);
+
+function shuffleCups() {
+  ballLocation = Math.floor(Math.random() * 3);
+  cups.forEach((cup) => {
+    cup.style.background = 'white';
+  });
+}
+
+function placeBet() {
+  const userBet = prompt("Enter your bet (A, B, or C):");
+  const userBetIndex = userBet.toUpperCase().charCodeAt(0) - 65;
+  
+  if (userBetIndex === ballLocation) {
+    resultDiv.innerHTML = "You win!";
+  } else {
+    resultDiv.innerHTML = `Sorry, the ball was under cup ${String.fromCharCode(65 + ballLocation)}`;
+  }
+}
+```
